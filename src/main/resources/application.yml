@@ -1,0 +1,17 @@
+spring:
+  profiles:
+    active: dev
+  logging:
+    level:
+      org.hibernate.SQL: trace
+      org.hibernate.type.descriptor.sql.BasicBinder: trace
+server:
+  servlet:
+    encoding:
+      force-response: true
+  error:
+    include-exception: true
+    include-stacktrace: always
+
+
+
