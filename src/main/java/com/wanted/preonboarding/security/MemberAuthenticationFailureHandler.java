@@ -1,5 +1,7 @@
 package com.wanted.preonboarding.security;
 
+import com.wanted.preonboarding.exception.CustomException;
+import com.wanted.preonboarding.exception.ErrorCode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
@@ -14,7 +16,9 @@ public class MemberAuthenticationFailureHandler implements AuthenticationFailure
     public void onAuthenticationFailure(HttpServletRequest request,
                                         HttpServletResponse response,
                                         AuthenticationException exception) throws IOException {
-        log.error("# Authentication failed: {}", exception.getMessage());
+
+
+        throw new CustomException(ErrorCode.MEMBER_NOT_FOUND);
 
 //        sendErrorResponse(response);  // (2)
     }

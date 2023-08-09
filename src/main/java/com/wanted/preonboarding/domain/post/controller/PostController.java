@@ -80,7 +80,7 @@ public class PostController {
 
         postService.deletePost(postIdx, customUserDetails.getMemberIdx());
 
-        return ResponseEntity.ok().build();
+        return ResponseEntity.noContent().build();
     }
 
 }
