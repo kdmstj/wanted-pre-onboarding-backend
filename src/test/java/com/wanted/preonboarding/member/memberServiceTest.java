@@ -14,6 +14,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import java.util.Optional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.doReturn;
@@ -68,13 +69,14 @@ public class memberServiceTest {
     @DisplayName("회원 조회(조회 하는 회원이 없는 경우)")
     public void findMember2(){
         //given
-        Long memberIdx = 1L;
-        Member member = Member.builder().memberIdx(memberIdx).email("user@gmail.com").password("password").build();
         given(memberRepository.findById(2L)).willThrow(new RuntimeException("MEMBER_NOT_FOUND"));
+
         //when
-        Member findMember = memberService.findMember(memberIdx);
+
         //then
-        assertThat(findMember.getEmail()).isNull();
+        assertThrows(RuntimeException.class, () -> {
+            memberService.findMember(2L);
+        });
     }
 
 
