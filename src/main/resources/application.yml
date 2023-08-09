@@ -1,6 +1,6 @@
 spring:
   profiles:
-    active: dev
+    active: local
   logging:
     level:
       org.hibernate.SQL: trace
@@ -13,5 +13,9 @@ server:
     include-exception: true
     include-stacktrace: always
 
+jwt:
+  key: ${JWT_SECRET_KEY}
+  access-token-expiration-minutes: 30
+  refresh-token-expiration-minutes: 420
 
 
