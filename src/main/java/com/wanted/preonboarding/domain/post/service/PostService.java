@@ -1,6 +1,5 @@
 package com.wanted.preonboarding.domain.post.service;
 
-import com.wanted.preonboarding.domain.post.dto.PostDto;
 import com.wanted.preonboarding.domain.post.entity.Post;
 import com.wanted.preonboarding.domain.post.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
