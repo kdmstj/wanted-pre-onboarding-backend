@@ -86,7 +86,6 @@ public class postControllerTest {
         ResultActions actions =
                 mockMvc.perform(
                         post("/posts")
-
                                 .accept(MediaType.APPLICATION_JSON)
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(content)

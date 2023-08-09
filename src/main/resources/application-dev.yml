@@ -19,9 +19,10 @@ server:
     encoding:
       force-response: true
   error:
-    include-exception: true
+    include-exception: false
+    include-message: always
     include-stacktrace: always
-
+    whitelabel.enabled: true
 jwt:
   key: ${JWT_SECRET_KEY}
   access-token-expiration-minutes: 30
