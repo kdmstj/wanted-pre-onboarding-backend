@@ -8,8 +8,8 @@
 ## 애플리케이션 실행 방법(엔드포인트 호출 방법 포함)
 ### 애플리케이션 실행방법
 
-  $ ./gradlew clean build --exclude-task test
-  $ docker-compose up -d
+    $ ./gradlew clean build --exclude-task test
+    $ docker-compose up -d
 
 ### 엔드포인트 호출 방법
 
