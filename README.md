@@ -68,11 +68,12 @@ Request Header Authorization JWT 포함
 
 - Request
 
+````
     {
       "email" : "kdmstj@gmail.com",
       "password" : "kdmstjpassword"
     }
-  
+````  
 - Response
 
   201 Created
