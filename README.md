@@ -107,7 +107,15 @@ Request Header Authorization JWT 포함
   - 이메일 조건(@포함)을 충족하지 않은 경우
   - 비밀번호 조건(8자 이상)을 충족하지 않은 경우
 ````
-
+````json
+401 UNAUTHORIZED 등록된 회원이 아닌 경우
+{
+    "status": 401,
+    "error": "UNAUTHORIZED",
+    "code": "INVALID_USER",
+    "message": "등록된 회원 정보가 없습니다."
+}
+````
 ### 게시물 생성
 
     POST /posts
@@ -169,12 +177,13 @@ Authorization : Bearer AccessToken
     }
 ````
 ````json
-    //등록되지 않은 게시물 조회 요청
-    404 NOT_FOUND
+    404 Not Found (등록된 게시물이 없는 경우)
+    {
     "status": 404,
     "error": "NOT_FOUND",
     "code": "POST_NOT_FOUND",
     "message": "해당 게시물을 찾을 수 없습니다."
+    }
 ````
 
 ### 게시물 수정
@@ -200,8 +209,16 @@ Authorization : Bearer AccessToken
     }
 ````
 ````json
-    //게시물 소유자가 아닌 경우
-    401 Unauthorized
+    404 Not Found (등록된 게시물이 없는 경우)
+    {
+    "status": 404,
+    "error": "NOT_FOUND",
+    "code": "POST_NOT_FOUND",
+    "message": "해당 게시물을 찾을 수 없습니다."
+    }
+````
+````json
+    401 Unauthorized (게시물 소유자가 아닌 경우)
     {
     "status": 401,
     "error": "UNAUTHORIZED",
@@ -220,6 +237,15 @@ Authorization : Bearer AccessToken
 - Response
 ````
     204 NoContent
+````
+````json
+    404 Not Found (등록된 게시물이 없는 경우)
+    {
+    "status": 404,
+    "error": "NOT_FOUND",
+    "code": "POST_NOT_FOUND",
+    "message": "해당 게시물을 찾을 수 없습니다."
+    }
 ````
 ````json
     401 Unauthorized (게시물 소유자가 아닌 경우)
