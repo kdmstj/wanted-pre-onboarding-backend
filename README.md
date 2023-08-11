@@ -10,8 +10,8 @@
 
 <br/>
 
-## 애플리케이션 실행 방법(엔드포인트 호출 방법 포함)
-### 애플리케이션 실행방법
+## 실행 방법
+### 애플리케이션 실행 방법
 
     $ ./gradlew clean build --exclude-task test
     $ docker-compose up -d
@@ -62,22 +62,24 @@ Request Header Authorization JWT 포함
 <br/>
 
 ## API 명세(request/response 포함)
-### 1. POST 회원가입
-http://52.78.179.183:8080/members
+### 회원가입
 
-1.1 Request
-- Body
+    POST /members
+
+- Request
 
     {
       "email" : "kdmstj@gmail.com",
       "password" : "kdmstjpassword"
     }
   
-1.2 Response
-  - 201 Created
-  - 400 Bad Request
-  -     이메일 조건(@포함)을 충족하지 않은 경우
-  -     비밀번호 조건(8자 이상)을 충족하지 않은 경우
+- Response
+
+  201 Created
+
+  400 Bad Request
+  - 이메일 조건(@포함)을 충족하지 않은 경우
+  - 비밀번호 조건(8자 이상)을 충족하지 않은 경우
 
 ### 2. POST 로그인
 http://52.78.179.183:8080/auth/login
