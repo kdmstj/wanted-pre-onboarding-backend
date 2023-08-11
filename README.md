@@ -71,19 +71,19 @@ Request Header Authorization JWT 포함
 - Request
 
 ````json
-    {
-      "email" : "kdmstj@gmail.com",
-      "password" : "kdmstjpassword"
-    }
+{
+  "email" : "kdmstj@gmail.com",
+  "password" : "kdmstjpassword"
+}
 ````  
 - Response
 ````
-  201 Created
+201 Created
 ````
 ````
-  400 Bad Request
-  - 이메일 조건(@포함)을 충족하지 않은 경우
-  - 비밀번호 조건(8자 이상)을 충족하지 않은 경우
+400 Bad Request
+- 이메일 조건(@포함)을 충족하지 않은 경우
+- 비밀번호 조건(8자 이상)을 충족하지 않은 경우
 ````
 
 ### 로그인
@@ -93,19 +93,19 @@ Request Header Authorization JWT 포함
 - Request 
 
 ````json
-    {
-      "email" : "kdmstj@gmail.com",
-      "password" : "kdmstjpassword"
-    }
+{
+  "email" : "kdmstj@gmail.com",
+  "password" : "kdmstjpassword"
+}
 ````  
 - Response
 ````
-  200 Ok
+200 Ok
 ````
 ````
-  400 Bad Request
-  - 이메일 조건(@포함)을 충족하지 않은 경우
-  - 비밀번호 조건(8자 이상)을 충족하지 않은 경우
+400 Bad Request
+- 이메일 조건(@포함)을 충족하지 않은 경우
+- 비밀번호 조건(8자 이상)을 충족하지 않은 경우
 ````
 ````json
 401 UNAUTHORIZED 등록된 회원이 아닌 경우
@@ -126,9 +126,9 @@ Authorization : Bearer AccessToken
 ```
 - Request Body
 ````json
-    {
+{
     "content" : "새로운 게시글 생성"
-    }
+}
 ````  
 - Response
 ````
@@ -145,23 +145,23 @@ Authorization : Bearer AccessToken
 ```
 - Request Body
 ````json
-    {
+{
     "content" : "새로운 게시글 생성"
-    }
+}
 ````  
 - Response
 ````json
-    200 OK
-    [
-        {
-            "postIdx": 3,
-            "content": "새로운 게시글 생성"
-        },
-        {
-            "postIdx": 4,
-            "content": "새로운 게시글 생성2"
-        }
-    ]
+200 OK
+[
+    {
+        "postIdx": 3,
+        "content": "새로운 게시글 생성"
+     },
+     {
+        "postIdx": 4,
+        "content": "새로운 게시글 생성2"
+    }
+]
 ````
 
 ### 특정 게시물 조회
@@ -170,20 +170,20 @@ Authorization : Bearer AccessToken
 
 - Response
 ````json
-    200 OK
-    {
+200 OK
+{
     "postIdx": 3,
     "content": "새로운 게시글 생성"
-    }
+}
 ````
 ````json
-    404 Not Found (등록된 게시물이 없는 경우)
-    {
+404 Not Found (등록된 게시물이 없는 경우)
+{
     "status": 404,
     "error": "NOT_FOUND",
     "code": "POST_NOT_FOUND",
     "message": "해당 게시물을 찾을 수 없습니다."
-    }
+}
 ````
 
 ### 게시물 수정
@@ -196,35 +196,35 @@ Authorization : Bearer AccessToken
 ```
 - Request Body
 ````json
-    {
+{
     "content" : "새로운 게시글 생성"
-    }
+}
 ````  
 - Response
 ````json
-    200 Ok
-    {
+200 Ok
+{
     "postIdx": 5,
     "content": "수정된 게시글1"
-    }
+}
 ````
 ````json
-    404 Not Found (등록된 게시물이 없는 경우)
-    {
+404 Not Found (등록된 게시물이 없는 경우)
+{
     "status": 404,
     "error": "NOT_FOUND",
     "code": "POST_NOT_FOUND",
     "message": "해당 게시물을 찾을 수 없습니다."
-    }
+}
 ````
 ````json
-    401 Unauthorized (게시물 소유자가 아닌 경우)
-    {
+401 Unauthorized (게시물 소유자가 아닌 경우)
+{
     "status": 401,
     "error": "UNAUTHORIZED",
     "code": "INVALID_AUTH_TOKEN",
     "message": "권한 정보가 없는 토큰입니다."
-    }
+}
 ````
 ### 게시물 삭제
 
@@ -236,23 +236,23 @@ Authorization : Bearer AccessToken
 ```` 
 - Response
 ````
-    204 NoContent
+204 NoContent
 ````
 ````json
-    404 Not Found (등록된 게시물이 없는 경우)
-    {
+404 Not Found (등록된 게시물이 없는 경우)
+{
     "status": 404,
     "error": "NOT_FOUND",
     "code": "POST_NOT_FOUND",
     "message": "해당 게시물을 찾을 수 없습니다."
-    }
+}
 ````
 ````json
     401 Unauthorized (게시물 소유자가 아닌 경우)
-    {
+{
     "status": 401,
     "error": "UNAUTHORIZED",
     "code": "INVALID_AUTH_TOKEN",
     "message": "권한 정보가 없는 토큰입니다."
-    }
+}
 ````
