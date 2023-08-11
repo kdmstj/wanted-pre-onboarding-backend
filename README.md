@@ -4,7 +4,7 @@
 
 ## AWS 배포 환경
 **`AWS 배포 주소` :**  52.78.179.183<br/>
-<배포 환경 이미지 첨부>
+![image](https://github.com/kdmstj/wanted-pre-onboarding-backend/assets/62414231/a8dc90c2-8f2a-4272-b974-48b6dd3f6294)
 
 ## 애플리케이션 실행 방법(엔드포인트 호출 방법 포함)
 ### 애플리케이션 실행방법
@@ -13,6 +13,16 @@
     $ docker-compose up -d
 
 ### 엔드포인트 호출 방법
+| HTTP Method | EndPoint | Description |
+|------|---|---|
+|POST|/members|회원가입|
+|POST|/auth/login|로그인|
+|POST|/posts|게시물 등록|
+|GET|/posts|게시물 목록 조회|
+|GET|/posts/{post-idx}|특정 게시물 조회|
+|PATCH|/posts/{post-idx}|게시물 수정|
+|DELETE|/posts/{post-idx}|게시물 삭제|
+
 
 
 ## 데이터베이스 테이블 구조
