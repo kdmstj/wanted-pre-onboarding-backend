@@ -3,11 +3,13 @@
 **`데모영상` :** 링크 삽입<br/>
 
 <br/>
+
 ## AWS 배포 환경
 **`AWS 배포 주소` :**  52.78.179.183<br/>
 ![image](https://github.com/kdmstj/wanted-pre-onboarding-backend/assets/62414231/a8dc90c2-8f2a-4272-b974-48b6dd3f6294)
 
 <br/>
+
 ## 애플리케이션 실행 방법(엔드포인트 호출 방법 포함)
 ### 애플리케이션 실행방법
 
@@ -26,10 +28,12 @@
 |DELETE|/posts/{post-idx}|게시물 삭제|
 
 <br/>
+
 ## 데이터베이스 테이블 구조
 ![image](https://github.com/kdmstj/wanted-pre-onboarding-backend/assets/62414231/e67533b9-af4f-452e-996d-5ef5e3c61ddf)
 
 <br/>
+
 ## 구현 방법
 ### 회원가입
 회원가입 유효성 검사 방법 ( 이메일 , 비밀번호)
@@ -56,6 +60,7 @@ Request Header Authorization JWT 포함
 Request Header Authorization JWT 포함
 
 <br/>
+
 ## API 명세(request/response 포함)
 ### 1. POST 회원가입
 http://52.78.179.183:8080/members
