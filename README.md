@@ -16,6 +16,8 @@
     $ ./gradlew clean build --exclude-task test
     $ docker-compose up -d
 
+<br/>
+
 ### 엔드포인트 호출 방법
 | HTTP Method | EndPoint | Description |
 |------|---|---|
@@ -64,7 +66,7 @@ Request Header Authorization JWT 포함
 ## API 명세(request/response 포함)
 ### 회원가입
 
-    POST /members
+    **POST** /members
 
 - Request
 
@@ -76,10 +78,10 @@ Request Header Authorization JWT 포함
 ````  
 - Response
 ````
-  201 Created
+  **201 Created**
 ````
 ````
-  400 Bad Request
+  **400 Bad Request**
   - 이메일 조건(@포함)을 충족하지 않은 경우
   - 비밀번호 조건(8자 이상)을 충족하지 않은 경우
 ````
@@ -111,8 +113,9 @@ Request Header Authorization JWT 포함
     POST /posts
 
 - Request Headers
+```
 Authorization : Bearer AccessToken
-
+```
 - Request Body
 ````
     {
@@ -129,8 +132,9 @@ Authorization : Bearer AccessToken
     GET /posts?pageNum=1
 
 - Request Headers
+```
 Authorization : Bearer AccessToken
-
+```
 - Request Body
 ````
     {
@@ -165,6 +169,7 @@ Authorization : Bearer AccessToken
     }
 ````
 ````
+    //등록되지 않은 게시물 조회 요청
     404 NOT_FOUND
     "status": 404,
     "error": "NOT_FOUND",
@@ -174,11 +179,12 @@ Authorization : Bearer AccessToken
 
 ### 게시물 수정
 
-    POST /posts
+    PATCH /posts/{post-idx}
 
 - Request Headers
+```
 Authorization : Bearer AccessToken
-
+```
 - Request Body
 ````
     {
@@ -187,22 +193,41 @@ Authorization : Bearer AccessToken
 ````  
 - Response
 ````
-    201 Created
+    200 Ok
+    {
+    "postIdx": 5,
+    "content": "수정된 게시글1"
+    }
+````
+````
+    //게시물 소유자가 아닌 경우
+    401 Unauthorized
+    {
+    "status": 401,
+    "error": "UNAUTHORIZED",
+    "code": "INVALID_AUTH_TOKEN",
+    "message": "권한 정보가 없는 토큰입니다."
+    }
 ````
 ### 게시물 삭제
 
-    POST /posts
+    DELETE /posts/{post-idx}
 
 - Request Headers
-Authorization : Bearer AccessToken
-
-- Request Body
 ````
-    {
-    "content" : "새로운 게시글 생성"
-    }
-````  
+Authorization : Bearer AccessToken
+```` 
 - Response
 ````
-    201 Created
+    204 NoContent
+````
+````
+    //게시물 소유자가 아닌 경우
+    401 Unauthorized
+    {
+    "status": 401,
+    "error": "UNAUTHORIZED",
+    "code": "INVALID_AUTH_TOKEN",
+    "message": "권한 정보가 없는 토큰입니다."
+    }
 ````
