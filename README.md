@@ -221,9 +221,8 @@ Authorization : Bearer AccessToken
 ````
     204 NoContent
 ````
-    - 게시물 소유자가 아닌 경우
 ````json
-    401 Unauthorized
+    401 Unauthorized (게시물 소유자가 아닌 경우)
     {
     "status": 401,
     "error": "UNAUTHORIZED",
