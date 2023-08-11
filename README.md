@@ -1,6 +1,6 @@
 # wanted-pre-onboarding-backend
 **`이름` :**  강은서<br/>
-**`데모영상` :** [https://drive.google.com/file/d/1rHpbs7LgVrpAeTFoyethaHnJTCu3v_sw/view?usp=sharing](https://youtu.be/g7dNa-cl4V8) <br/>
+**`데모영상` :** [데모영상 보러가기](https://youtu.be/g7dNa-cl4V8) <br/>
 
 <br/>
 
