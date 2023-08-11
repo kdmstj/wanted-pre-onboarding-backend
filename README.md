@@ -12,10 +12,10 @@
 
 ## 실행 방법
 ### 애플리케이션 실행 방법
-
+````bash
     $ ./gradlew clean build --exclude-task test
     $ docker-compose up -d
-
+````
 <br/>
 
 ### 엔드포인트 호출 방법
@@ -70,7 +70,7 @@ Request Header Authorization JWT 포함
 
 - Request
 
-````
+````json
     {
       "email" : "kdmstj@gmail.com",
       "password" : "kdmstjpassword"
@@ -78,10 +78,10 @@ Request Header Authorization JWT 포함
 ````  
 - Response
 ````
-  **201 Created**
+  201 Created
 ````
 ````
-  **400 Bad Request**
+  400 Bad Request
   - 이메일 조건(@포함)을 충족하지 않은 경우
   - 비밀번호 조건(8자 이상)을 충족하지 않은 경우
 ````
@@ -92,7 +92,7 @@ Request Header Authorization JWT 포함
 
 - Request 
 
-````
+````json
     {
       "email" : "kdmstj@gmail.com",
       "password" : "kdmstjpassword"
@@ -117,7 +117,7 @@ Request Header Authorization JWT 포함
 Authorization : Bearer AccessToken
 ```
 - Request Body
-````
+````json
     {
     "content" : "새로운 게시글 생성"
     }
@@ -136,13 +136,13 @@ Authorization : Bearer AccessToken
 Authorization : Bearer AccessToken
 ```
 - Request Body
-````
+````json
     {
     "content" : "새로운 게시글 생성"
     }
 ````  
 - Response
-````
+````json
     200 OK
     [
         {
@@ -161,14 +161,14 @@ Authorization : Bearer AccessToken
     GET /posts/{post-idx}
 
 - Response
-````
+````json
     200 OK
     {
     "postIdx": 3,
     "content": "새로운 게시글 생성"
     }
 ````
-````
+````json
     //등록되지 않은 게시물 조회 요청
     404 NOT_FOUND
     "status": 404,
@@ -186,20 +186,20 @@ Authorization : Bearer AccessToken
 Authorization : Bearer AccessToken
 ```
 - Request Body
-````
+````json
     {
     "content" : "새로운 게시글 생성"
     }
 ````  
 - Response
-````
+````json
     200 Ok
     {
     "postIdx": 5,
     "content": "수정된 게시글1"
     }
 ````
-````
+````json
     //게시물 소유자가 아닌 경우
     401 Unauthorized
     {
@@ -221,7 +221,7 @@ Authorization : Bearer AccessToken
 ````
     204 NoContent
 ````
-````
+````json
     //게시물 소유자가 아닌 경우
     401 Unauthorized
     {
