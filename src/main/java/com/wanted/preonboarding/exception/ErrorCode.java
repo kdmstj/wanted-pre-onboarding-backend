@@ -17,6 +17,7 @@ public enum ErrorCode {
     /*
     401 UNAUTHORIZED : 인증되지 않은 사용자
      */
+    INVALID_USER(UNAUTHORIZED, "등록된 회원 정보가 없습니다."),
     INVALID_AUTH_TOKEN(UNAUTHORIZED, "권한 정보가 없는 토큰입니다."),
 
     /*

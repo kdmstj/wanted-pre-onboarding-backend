@@ -66,9 +66,7 @@ public class PostController {
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<?> patchPost(@PathVariable("post-idx") @Positive Long postIdx, @RequestBody PostDto.Patch patchDto, @AuthenticationPrincipal CustomUserDetails customUserDetails) {
 
-        Post patchingPost = postMapper.patchDtoToPost(patchDto, postService.verifyWriter(postIdx, customUserDetails.getMemberIdx()));
-
-        Post patchedPost = postService.patchPost(patchingPost);
+        Post patchedPost = postService.patchPost(postIdx, patchDto, customUserDetails.getMemberIdx());
 
         PostDto.Response responseDto = postMapper.postToPostResponse(patchedPost);
         return ResponseEntity.ok().body(responseDto);

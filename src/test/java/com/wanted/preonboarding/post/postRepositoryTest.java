@@ -120,7 +120,7 @@ public class postRepositoryTest {
         postRepository.delete(savedPost);
 
         //then
-        Optional<Post> optional = postRepository.findById(1L);
+        Optional<Post> optional = postRepository.findById(2L);
         assertThat(optional).isEmpty();
     }
 
@@ -129,14 +129,14 @@ public class postRepositoryTest {
     public void verifyWriter(){
         //given
         Long memberIdx = 1L;
-        Member member = memberRepository.save(member(memberIdx));
+        Member savedMember = memberRepository.save(member(memberIdx));
         Long postIdx = 1L;
         Post post = post(postIdx);
-        post.setMember(member);
-        postRepository.save(post);
+        post.setMember(savedMember);
+        Post createdPost = postRepository.save(post);
 
         //when
-        Optional<Post> optional = postRepository.findPostByPostIdxAndMember_MemberIdx(postIdx, memberIdx);
+        Optional<Post> optional = postRepository.findPostByPostIdxAndMember_MemberIdx(createdPost.getPostIdx(), savedMember.getMemberIdx());
 
         //then
         assertThat(optional).isNotEmpty();

@@ -47,7 +47,6 @@ public class postControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
-
     @MockBean
     private MemberService memberService;
 
