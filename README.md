@@ -41,16 +41,66 @@
 Request Header Authorization JWT 포함, JWT Verfication Filter
 CustomUserDetails에서 userIdx 추출
 
-## 게시물 조회
+### 게시물 조회
 특정 게시물 조회
 
-## 게시물 목록 조회
+### 게시물 목록 조회
 페이지네이션
 
-## 게시물 수정
+### 게시물 수정
 Request Header Authorization JWT 포함
 
-## 게시물 삭제
+### 게시물 삭제
 Request Header Authorization JWT 포함
 
-### API 명세(request/response 포함)
+## API 명세(request/response 포함)
+### 1. POST 회원가입
+http://52.78.179.183:8080/members
+
+1.1 Request
+- Body
+
+    {
+      "email" : "kdmstj@gmail.com",
+      "password" : "kdmstjpassword"
+    }
+  
+1.2 Response
+  - 201 Created
+  - 400 Bad Request
+  -     이메일 조건(@포함)을 충족하지 않은 경우
+  -     비밀번호 조건(8자 이상)을 충족하지 않은 경우
+
+### 2. POST 로그인
+http://52.78.179.183:8080/auth/login
+
+2.1 Request
+- Body
+
+      {
+          "email" : "kdmstj@gmail.com",
+          "password" : "kdmstjpassword"
+      }
+  
+2.2 Response
+- 200 OK
+  Headers : Authorization : Bearer eyJhbGciOiJIUzI1NiJ9.eyJtZW1iZXJJZHgiOjQsInVzZXJuYW1lIjoia2Rtc3RqMUBnbWFpbC5jb20iLCJzdWIiOiJrZG1zdGoxQGdtYWlsLmNvbSIsImlhdCI6MTY5MTc0Mzk3NiwiZXhwIjoxNjkxNzQ1Nzc2fQ.XBIY3mFs-bQNFn22g_PmvQ-WScopv6wSuDPKkDwUEnk
+
+### 3. POST 게시물 생성
+http://52.78.179.183:8080/posts
+
+3.1 Request
+- Headers
+
+    Authorization : Bearer eyJhbGciOiJIUzI1NiJ9.eyJtZW1iZXJJZHgiOjQsInVzZXJuYW1lIjoia2Rtc3RqMUBnbWFpbC5jb20iLCJzdWIiOiJrZG1zdGoxQGdtYWlsLmNvbSIsImlhdCI6MTY5MTczNzYyOSwiZXhwIjoxNjkxNzM5NDI5fQ.WtPDdlnVvJwYCvNQLw0MSVk5_TREaPUuFlvmBGcIYsk
+
+- Body
+
+    {
+    "content" : "새로운 게시글 생성"
+    }
+
+### 4. GET 게시물 목록 조회
+### 5. GET 특정 게시물 조회
+### 6. PATCH 게시물 수정
+### 7. DELETE 게시물 삭제
