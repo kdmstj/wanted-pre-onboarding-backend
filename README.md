@@ -1,6 +1,6 @@
 # wanted-pre-onboarding-backend
 **`이름` :**  강은서<br/>
-**`데모영상` :** 링크 삽입<br/>
+**`데모영상` :** [https://drive.google.com/file/d/1rHpbs7LgVrpAeTFoyethaHnJTCu3v_sw/view?usp=sharing](https://youtu.be/g7dNa-cl4V8) <br/>
 
 <br/>
 
@@ -45,7 +45,7 @@
 로그인 AuthenticationFilter (Response Header JWT 토큰 반환)
 로그인 유효성 검사 방법 ( 이메일 , 비밀번호)
 
-## 게시물 생성
+### 게시물 생성
 Request Header Authorization JWT 포함, JWT Verfication Filter
 CustomUserDetails에서 userIdx 추출
 
@@ -66,7 +66,7 @@ Request Header Authorization JWT 포함
 ## API 명세(request/response 포함)
 ### 회원가입
 
-    **POST** /members
+    POST /members
 
 - Request
 
