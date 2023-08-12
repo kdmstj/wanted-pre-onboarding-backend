@@ -1,8 +1,12 @@
 package com.wanted.preonboarding.security;
 
-import com.wanted.preonboarding.exception.CustomException;
+import com.google.gson.Gson;
 import com.wanted.preonboarding.exception.ErrorCode;
+import com.wanted.preonboarding.exception.ErrorResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 
@@ -17,17 +21,16 @@ public class MemberAuthenticationFailureHandler implements AuthenticationFailure
                                         HttpServletResponse response,
                                         AuthenticationException exception) throws IOException {
 
-
-        throw new CustomException(ErrorCode.MEMBER_NOT_FOUND);
-
-//        sendErrorResponse(response);  // (2)
+       sendErrorResponse(response);
     }
 
-//    private void sendErrorResponse(HttpServletResponse response) throws IOException {
-//        Gson gson = new Gson();     // (2-1)
-//        ErrorResponse errorResponse = ErrorResponse.of(HttpStatus.UNAUTHORIZED); // (2-2)
-//        response.setContentType(MediaType.APPLICATION_JSON_VALUE);    // (2-3)
-//        response.setStatus(HttpStatus.UNAUTHORIZED.value());          // (2-4)
-//        response.getWriter().write(gson.toJson(errorResponse, ErrorResponse.class));   // (2-5)
-//    }
+    private void sendErrorResponse(HttpServletResponse response) throws IOException {
+
+        Gson gson = new Gson();
+        ErrorResponse errorResponse = ErrorResponse.of(ErrorCode.INVALID_USER);
+        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+        response.setStatus(HttpStatus.UNAUTHORIZED.value());
+        response.getWriter().write(gson.toJson(errorResponse, ErrorResponse.class));
+
+    }
 }

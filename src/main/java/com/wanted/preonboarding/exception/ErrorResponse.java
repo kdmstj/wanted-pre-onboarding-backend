@@ -2,6 +2,7 @@ package com.wanted.preonboarding.exception;
 
 import lombok.Builder;
 import lombok.Getter;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 @Getter
@@ -11,6 +12,8 @@ public class ErrorResponse {
     private final String error;
     private final String code;
     private final String message;
+
+
 
     public static ResponseEntity<ErrorResponse> toResponseEntity(ErrorCode errorCode) {
         return ResponseEntity
@@ -23,4 +26,10 @@ public class ErrorResponse {
                         .build()
                 );
     }
+
+    public static ErrorResponse of(ErrorCode errorCode) {
+        return new ErrorResponse(errorCode.getHttpStatus().value(), errorCode.getHttpStatus().name(),
+                errorCode.name(), errorCode.getDetail());
+    }
+
 }

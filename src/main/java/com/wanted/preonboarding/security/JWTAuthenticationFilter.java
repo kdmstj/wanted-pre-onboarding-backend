@@ -33,7 +33,6 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(loginDto.getEmail(), loginDto.getPassword());
 
-        System.out.println("loginDto : " + loginDto.getPassword());
         return authenticationManager.authenticate(authenticationToken);
     }
 

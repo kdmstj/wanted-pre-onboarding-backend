@@ -1,5 +1,6 @@
 package com.wanted.preonboarding.domain.post.service;
 
+import com.wanted.preonboarding.domain.post.dto.PostDto;
 import com.wanted.preonboarding.domain.post.entity.Post;
 import com.wanted.preonboarding.domain.post.repository.PostRepository;
 import com.wanted.preonboarding.exception.CustomException;
@@ -38,17 +39,26 @@ public class PostService {
         return optional.orElseThrow(() -> new CustomException(POST_NOT_FOUND));
     }
 
-    public Post patchPost(Post post) {
-        return postRepository.save(post);
+    public Post patchPost(Long postIdx, PostDto.Patch patchDto, Long memberIdx) {
+        Post findPost = findPost(postIdx);
+        verifyWriter(postIdx, memberIdx);
+        findPost.setContent(patchDto.getContent());
+        return postRepository.save(findPost);
+    }
+
+    public void deletePost(Long postIdx, Long memberIdx) {
+        Post findPost = findPost(postIdx);
+        verifyWriter(postIdx, memberIdx);
+        postRepository.delete(findPost);
     }
 
     public Post verifyWriter(Long postIdx, Long memberIdx) {
+        findPost(postIdx);
         Optional<Post> optional = postRepository.findPostByPostIdxAndMember_MemberIdx(postIdx, memberIdx);
         return optional.orElseThrow(() -> new CustomException(INVALID_AUTH_TOKEN));
     }
 
-    public void deletePost(Long postIdx, Long memberIdx) {
-        Post post = verifyWriter(postIdx, memberIdx);
-        postRepository.delete(post);
-    }
+
+
+
 }
