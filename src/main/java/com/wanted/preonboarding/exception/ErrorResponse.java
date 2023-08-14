@@ -27,6 +27,16 @@ public class ErrorResponse {
                 );
     }
 
+    public static ResponseEntity<ErrorResponse> toResponseEntity(String error){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(ErrorResponse.builder()
+                        .status(HttpStatus.BAD_REQUEST.value())
+                        .error(HttpStatus.BAD_REQUEST.name())
+                        .code("INVALID_INPUT")
+                        .message(error.toString())
+                        .build());
+    }
+
     public static ErrorResponse of(ErrorCode errorCode) {
         return new ErrorResponse(errorCode.getHttpStatus().value(), errorCode.getHttpStatus().name(),
                 errorCode.name(), errorCode.getDetail());

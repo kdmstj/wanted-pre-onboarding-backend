@@ -14,6 +14,7 @@ public enum ErrorCode {
     400 BAD REQUEST : 잘못된 요청
      */
 
+
     /*
     401 UNAUTHORIZED : 인증되지 않은 사용자
      */
