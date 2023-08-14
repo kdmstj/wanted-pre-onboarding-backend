@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.net.URI;
 
 @RestController
@@ -25,7 +26,7 @@ public class MemberController {
     private static final String DEFAULT_URI = "/members";
 
     @PostMapping
-    public ResponseEntity<?> postMember(@Validated @RequestBody MemberDto.Post requestBody){
+    public ResponseEntity<?> postMember(@Valid @RequestBody MemberDto.Post requestBody){
 
         Member postMember = memberMapper.memberPostDtoToMember(requestBody);
         Member createdMember = memberService.addMember(postMember);
