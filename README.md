@@ -57,7 +57,7 @@ UsernamePasswordAuthenticationFilter클래스를 상속받은 JWTAuthenticationF
 1. 메소드 실행 전 권한 검사
 Controller 계층에서 @PreAuthorize("isAuthenticated()") 어노테이션을 통해 메서드를 실행시키기 전에 권한 검사를 하도록 하여 사용자가 Request시 Header에 키는 Authorization 값은 JWT 토큰을 포함시켜 요청을 보내고 현재 사용자가 익명이 아니라면 (로그인 상태라면) true값을 내 메서드를 실행시키도록 하였다.
 2. JWT 토큰으로 사용자 식별
-토큰을 포함시켜 요청을 보내게 되면 검증을 처리하는 클래스인 JWTVerificationFilter 클래스를 생성하여 빈으로 등록된 SecurityFilterChain에 등록하였다. 키는 "username" 값은 사용자 email이 담긴 claim을 함께 build한 JWT 토큰에서 그 값을 추출해 MemberDetailsService의 loadUserByUsername 메소드로 사용자 식별을 하고, 이 정보를 전역적으로 사용할 수 있도록 SecurityContext에 전달하였다.
+토큰을 포함시켜 요청을 보내게 되면 검증을 처리하는 클래스인 JWTVerificationFilter 클래스를 생성하여 빈으로 등록된 SecurityFilterChain에 등록하였다. 키는 "username" 값은 email이 담긴 claim을 함께 build한 JWT 토큰에서 그 값을 추출하여 MemberDetailsService의 loadUserByUsername 메소드로 사용자 식별을 하고, 이 정보를 전역적으로 사용할 수 있도록 SecurityContext에 전달하였다.
 3. SecurityContext에 저장된 Authentication 객체에서 memberIdx를 추출하여 해당 게시물의 소유자인지 검증하도록 하였다.등록된 게시물이 없는 경우 404, 게시물의 소유자가 아닌 경우 401 에러가 발생한다.
 
 ### 게시물 목록 조회 페이지네이션
