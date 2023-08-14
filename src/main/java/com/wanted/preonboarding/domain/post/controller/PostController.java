@@ -1,6 +1,7 @@
 package com.wanted.preonboarding.domain.post.controller;
 
 import com.wanted.preonboarding.security.CustomUserDetails;
+import com.wanted.preonboarding.security.JWTTokenizer;
 import com.wanted.preonboarding.security.service.MemberDetailsService;
 import com.wanted.preonboarding.domain.member.service.MemberService;
 import com.wanted.preonboarding.domain.post.dto.PostDto;
@@ -29,6 +30,7 @@ public class PostController {
 
     private final PostService postService;
     private final MemberService memberService;
+    private final JWTTokenizer jwtTokenizer;
     private final PostMapper postMapper;
     private static final String DEFAULT_URI = "/posts";
 
@@ -47,7 +49,7 @@ public class PostController {
     }
 
     @GetMapping
-    public ResponseEntity<?> getPostList(@RequestParam("pageNum") int pageNum){
+    public ResponseEntity<?> getPostList(@RequestParam("pageNum") @Positive int pageNum){
 
         Page<Post> postList = postService.findPostList(pageNum);
         List<PostDto.Response> postDtoList = postMapper.postPageToResponseList(postList);
@@ -75,6 +77,7 @@ public class PostController {
     @DeleteMapping("/{post-idx}")
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<?> deletePost(@PathVariable("post-idx") @Positive Long postIdx, @AuthenticationPrincipal CustomUserDetails customUserDetails) {
+
 
         postService.deletePost(postIdx, customUserDetails.getMemberIdx());
 

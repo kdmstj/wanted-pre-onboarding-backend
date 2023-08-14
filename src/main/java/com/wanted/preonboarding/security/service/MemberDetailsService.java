@@ -25,9 +25,6 @@ public class MemberDetailsService implements UserDetailsService {
 
         Member findMember = optionalMember.orElseThrow(() -> new RuntimeException("MEMBER_NOT_FOUND"));
 
-        System.out.println("member username : " + findMember.getEmail());
-        System.out.println("member password : " + findMember.getPassword());
-
         return new CustomUserDetails(findMember);
     }
 }
