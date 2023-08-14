@@ -38,10 +38,10 @@
 
 ## 구현 방법
 ### 회원가입
-- 회원가입 유효성 검사 방법(이메일 양식, 비밀번호 8자 이상)
+- 회원가입 유효성 검사 방법(이메일 양식, 비밀번호 8자 이상)<br/>
 Bean Validator를 이용해 LocalValidatorFactoryBean이 객체의 제약 조건을 검증하도록 지시하는 어노테이션인 @Valid를 사용하였다. <br/>
-회원가입을 요청하는 DTO에 이메일 양식 제약 조건 어노테이션인 @Email, 비밀번호 길이가 8자 이상 작성해야 한다는 제약 조건 어노테이션 @Size(min = 8)을 붙이고 컨트롤러의 메소드에 @Valid를 붙여주면 유효성 검증이 진행된다.
-검증에 오류가 있다면 MethodArgumentNotValidException 예외가 발생하게 되고, GlobalExceptionHandler에서 MethodArgumentNotValidException Handler를 Override하여 공통 JSON Response인 ErrorResponse로 변환하여 응답하였다.
+회원가입을 요청하는 DTO에 이메일 양식 제약 조건 어노테이션인 @Email, 비밀번호 길이가 8자 이상 작성해야 한다는 제약 조건 어노테이션 @Size(min = 8)을 붙이고 컨트롤러의 메소드에 @Valid를 붙여주면 유효성 검증이 진행된다.<br/>
+검증에 오류가 있다면 MethodArgumentNotValidException 예외가 발생하게 되고, GlobalExceptionHandler에서 MethodArgumentNotValidException Handler를 Override하여 공통 JSON Response인 ErrorResponse로 변환하여 응답하였다.<br/>
 
 - 비밀번호 암호화 저장
 
