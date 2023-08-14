@@ -41,11 +41,16 @@
 - __회원가입 유효성 검사 방법(이메일 양식, 비밀번호 8자 이상)<br/>__
 Bean Validator를 이용해 LocalValidatorFactoryBean이 객체의 제약 조건을 검증하도록 지시하는 어노테이션인 @Valid를 사용하였다. 회원가입을 요청하는 DTO에 이메일 양식 제약 조건 어노테이션인 @Email, 비밀번호 길이가 8자 이상 작성해야 한다는 제약 조건 어노테이션 @Size(min = 8)을 붙이고 컨트롤러의 메소드에 @Valid를 붙여주면 유효성 검증이 진행된다. 검증에 오류가 있다면 MethodArgumentNotValidException 예외가 발생하게 되고, GlobalExceptionHandler에서 MethodArgumentNotValidException Handler를 Override하여 공통 JSON Response인 ErrorResponse로 변환하여 응답하였다.<br/>
 
-- 비밀번호 암호화 저장
+- __비밀번호 암호화 저장<br/>__
+Spring Security PasswordEncoder를 이용하여 Service 계층에서 평문의 비밀번호를 암호화하여 DB에 저장하였다. @Configuration 어노테이션을 활용하여 Spring Security와 관련된 클래스들을 Bean으로 등록하고자 함을 명시하고, PasswordEncoderFactories 클래스의 createDelegatingPasswordEncoder() 메소드 통해 PasswordEncoder를 리턴하는 passwordEncoder 메소드를 @Bean 어노테이션을 활용하여 Bean으로 동록하였다. 해당 메소드를 통해 암호화된 비밀번호는 {encodingId} + encode된 password 형태를 갖는다. encodingId는 암호화 알고리즘을 나타내는데 이 프로젝트에서는 Bcrypt을 사용하였다. 
 
 ### 로그인
-로그인 AuthenticationFilter (Response Header JWT 토큰 반환)
-로그인 유효성 검사 방법 ( 이메일 , 비밀번호)
+- __회원 인증<br/>__
+UsernamePasswordAuthenticationFilter클래스를 상속받은 AuthenticationFilter 클래스를 빈으로 등록된 SecurityFilterChain에 등록하여 회원 인증 하였다. 사용자 요청을 Object Mapper 클래스의 readValue() 메서드로 LoginDto로 변환하고, UsernamePasswordAuthenticationToken에 principal은 이메일, credentials는 비밀번호를 담아 생성하고 AuthenticationManager의 authenticate 메서드가 실질적인 인증처리 다음과 같은 순서로 하게 된다.
+1. ID 검증 : UserDetailsService를 상속받은 MemberDetailsService에서 Username(나와 같은 경우 email)로 DB에서 사용자를 조회한다. 사용자가 없을 경우 Exception이 발생되고, 성공하면 Member객체의 정보(memberIdx, email, password)가 담긴 MemberDetails 객체를 반환한다. 
+2. Password 검증: 반환 받은 MemberDetails 객체에 저장된 password와 UsernamePasswordAuthenticationToken에 저장된 password(로그인시 입력한 password)를 matches 메서드를 이용하여 비교하고 일치하지 않으면 UNAUTHORIZED 401 에러를 반환한다. 
+3. 추가 검증 까지 완료하면 UsernamePasswordAuthenticationToken(유저 정보, 권한 정보)를 AuthenticationManager에게 전달. AuthenticationManager는 Filter에게 전달하고, Filter는 이 정보를 전역적으로 사용할 수 있게 SecurityContext에 전달한다. 또한, JWT Tokenizer 클래스에 Access Token을 생성하는 메소드를 작성하여 response Header 값으로 키는 Authorization 값은 "Bearer " + accessToken 으로 하여 응답하도록 하였다. 
+
 
 ### 게시물 생성
 Request Header Authorization JWT 포함, JWT Verfication Filter
@@ -86,6 +91,12 @@ Request Header Authorization JWT 포함
 400 Bad Request
 - 이메일 조건(@포함)을 충족하지 않은 경우
 - 비밀번호 조건(8자 이상)을 충족하지 않은 경우
+{
+    "status": 400,
+    "error": "BAD_REQUEST",
+    "code": "INVALID_INPUT",
+    "message": "[email] : 이메일 형식이 맞지 않습니다. [password] : 비밀번호는 8자 이상이어야 합니다. "
+}
 ````
 
 ### 로그인
@@ -108,6 +119,12 @@ Request Header Authorization JWT 포함
 400 Bad Request
 - 이메일 조건(@포함)을 충족하지 않은 경우
 - 비밀번호 조건(8자 이상)을 충족하지 않은 경우
+{
+    "status": 400,
+    "error": "BAD_REQUEST",
+    "code": "INVALID_INPUT",
+    "message": "[email] : 이메일 형식이 맞지 않습니다. [password] : 비밀번호는 8자 이상이어야 합니다. "
+}
 ````
 ````json
 401 UNAUTHORIZED 등록된 회원이 아닌 경우
