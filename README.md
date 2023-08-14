@@ -46,27 +46,26 @@ Spring Security PasswordEncoder를 이용하여 Service 계층에서 평문의 �
 
 ### 로그인
 - __회원 인증<br/>__
-UsernamePasswordAuthenticationFilter클래스를 상속받은 AuthenticationFilter 클래스를 빈으로 등록된 SecurityFilterChain에 등록하여 회원 인증 하였다. 사용자 요청을 Object Mapper 클래스의 readValue() 메서드로 LoginDto로 변환하고, UsernamePasswordAuthenticationToken에 principal은 이메일, credentials는 비밀번호를 담아 생성하고 AuthenticationManager의 authenticate 메서드가 실질적인 인증처리 다음과 같은 순서로 하게 된다.
-1. ID 검증 : UserDetailsService를 상속받은 MemberDetailsService에서 Username(나와 같은 경우 email)로 DB에서 사용자를 조회한다. 사용자가 없을 경우 Exception이 발생되고, 성공하면 Member객체의 정보(memberIdx, email, password)가 담긴 MemberDetails 객체를 반환한다. 
+UsernamePasswordAuthenticationFilter클래스를 상속받은 AuthenticationFilter 클래스를 빈으로 등록된 SecurityFilterChain에 등록하여 회원 인증 하였다. 사용자 요청을 Object Mapper 클래스의 readValue() 메서드로 LoginDto로 변환하고, UsernamePasswordAuthenticationToken에 principal은 이메일, credentials는 비밀번호를 담아 생성하고 AuthenticationManager의 authenticate 메서드가 실질적인 인증 처리를 하도록 하였다. 인증 처리는 다음과 같은 순서로 하게 된다.
+1. ID 검증 : UserDetailsService를 상속받은 MemberDetailsService 클래스에서 loadUserByUsername메서드를 통해  Username(나와 같은 경우 email)로 DB에서 사용자를 조회한다. 사용자가 없을 경우 Exception이 발생되고, 성공하면 Member객체의 정보(memberIdx, email, password)가 담긴 MemberDetails 객체를 반환한다. 
 2. Password 검증: 반환 받은 MemberDetails 객체에 저장된 password와 UsernamePasswordAuthenticationToken에 저장된 password(로그인시 입력한 password)를 matches 메서드를 이용하여 비교하고 일치하지 않으면 UNAUTHORIZED 401 에러를 반환한다. 
-3. 추가 검증 까지 완료하면 UsernamePasswordAuthenticationToken(유저 정보, 권한 정보)를 AuthenticationManager에게 전달. AuthenticationManager는 Filter에게 전달하고, Filter는 이 정보를 전역적으로 사용할 수 있게 SecurityContext에 전달한다. 또한, JWT Tokenizer 클래스에 Access Token을 생성하는 메소드를 작성하여 response Header 값으로 키는 Authorization 값은 "Bearer " + accessToken 으로 하여 응답하도록 하였다. 
+3. 추가 검증 까지 완료하면 UsernamePasswordAuthenticationToken을 AuthenticationManager에게 전달. AuthenticationManager는 Filter에게 전달하고, Filter는 이 정보를 전역적으로 사용할 수 있게 SecurityContext에 전달한다.
+4. 추후에 JWT 토큰을 사용하여 사용자 식별을 하기 위해서 JWT Tokenizer 클래스에서 Access Token을 생성하는 메소드를 작성할 때 "memberIdx"와 "email"이 키 값으로 담긴 claim을 함께 build한다. 생성된 JWT 토큰은 로그인 성공 시 response Header 값으로 키는 Authorization 값은 "Bearer " + accessToken 으로 하여 응답하도록 하였다. 
 
 
-### 게시물 생성
-Request Header Authorization JWT 포함, JWT Verfication Filter
+### 게시물 생성,수정,삭제 시 회원 검증
+- __회원 검증<br/>__
+Controller 계층에서 @PreAuthorize("isAuthenticated()") 어노테이션을 통해 메서드를 실행시키기 전에 권한 검사를 하도록 하여 사용자가 Request시 Header에 키는 Authorization 값은 JWT 토큰을 포함시켜 요청을 보내고 현재 사용자가 익명이 아니라면 (로그인 상태라면) true값을 내 메서드를 실행시키도록 하였다. 또한 
+Request시 Header에 키는 Authorization 값은 JWT 토큰을 포함시키고 , JWT Verfication Filter
 CustomUserDetails에서 userIdx 추출
 
 ### 게시물 조회
-특정 게시물 조회
+- __특정 게시물 조회<br/>__
+특정 게시물 아이디를 PathVariable로 요청을 보내 DB에서 postIdx에 해당하는 게시물을 응답하도록 하였다. 등록된 게시물이 없는 경우 404 Error가 발생하도록 하였다. 
 
 ### 게시물 목록 조회
-페이지네이션
-
-### 게시물 수정
-Request Header Authorization JWT 포함
-
-### 게시물 삭제
-Request Header Authorization JWT 포함
+- __게시물 목록 페이지네이션 조회<br/>__
+Pageable 인터페이스의 구현체인 PageRequest로 객체를 생성해 페이지네이션을 구현하였다. 사용자가 RequestParam으로 조회하고 싶은 페이지 값(1 이상)을 요청하게 되면, 실제 페이지는 0부터 시작되므로 Service 계층에서 요청이 들어온 페이지 값에 1을 뺀 값과 페이지네이션 단위가 담긴 PageRequest를 생성하고 PagingAndSortingRepository 인터페이스의 findAll 메소드로 조회하도록 하였다.
 
 <br/>
 
